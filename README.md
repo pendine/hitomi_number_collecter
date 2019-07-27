@@ -30,3 +30,7 @@ Simply put, when you Alt + tap, make sure the Java window and web page appear in
 
 contact : neokin7734@gmail.com
 으로 연락주세오...
+
+
+2019/08 안에 달성할 목표는 실행파일로 묶어서 C드라이브에 텍스트 파일로 저장할 수 있게 만드는겁니다.
+도움주실분들이나 사용법이 이해 안가시는분들이 있으면 위의 메일로 보내주세요...
