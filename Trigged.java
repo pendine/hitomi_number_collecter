@@ -103,7 +103,7 @@ public class Trigged extends Thread implements KeyListener {
 
     public String getString(String tmp) {
         String storage = "";
-        for(int i = tmp.length()/2; i<tmp.length()-2; i++){
+        for(int i = tmp.length()/2; i<tmp.length(); i++){
             if('0'<=tmp.charAt(i)&&tmp.charAt(i)<='9'){
                 storage = storage+tmp.charAt(i);
             }else if(tmp.charAt(i)=='/'){
