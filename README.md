@@ -1,16 +1,38 @@
-# hitomi_number_collecter
-here is stupid human is made stupid program to help your working for hitomi number collect.
+#hitomi_number_collecter
+here is stupid human is made stupid program to help your working for to collect galleries number of hitomi.
+
+License
+ : 
+if you use these files for non-commercial purposes, there are no restrictions on these modifications, such as modification, deletion, or insertion.
 
 
-this is not exe file.
+this is not exe file, here's is not exist exe File.
+
 you can be run only on java editor.
 
 this is use java robot.
 it is very simply working.
 Simply put, when you Alt + tap, make sure the Java window and web page appear in the first and second order.
 
+----------------------------------------------------------------------------------------------------------
+#hitomi_number_collecter
+#hiyobi_number_collecter
+여기 멍청한 인간이 만든 멍청한 프로그램이 있고 이 프로그램은 당신이 히토미의 갤러리 번호를 수집하는것을 도와줄겁니다.
+
+비상업적 용도로 사용시에만 파일들의 삽입, 수정, 삭제 등의 변형 가공을 허가합니다.
+
+이건 실행파일이 아니면서, 실행파일도 존재하지 않습니다.
+
+만약 사용을 하고자 한다면 자바 에디터가 필요합니다.
+
+매크로 구현을 위해서 자바의 로봇 클래스를 사용했습니다.
+알트+탭을 사용하는 기능을 매크로로 구현하여 간단한 동작을 합니다.
+사용하기 위해서는 코드를 실행하고 나오는 자바창이 알트텝을 했을때,
+자바창이 첫번째, 번호를 수집할 웹페이지가 두번째 순서로 나오면 됩니다.
+
+----------------------------------------------------------------------------------------------------------
 1.제작목적 = 히토미의 갤러리 '번호'를 만을 가져옵니다.
-2.사용목적 = 히토미의 갤러리 '번호'만을 수집합니다.
+2.사용목적 = 히토미의 갤러리 '번호'만을 필요로 하는사람들은 이 불완전한 파일을 사용할수 있습니다.
 
 
 멍청한놈이 만든 멍청한 프로그램입니다.
@@ -42,5 +64,6 @@ Simply put, when you Alt + tap, make sure the Java window and web page appear in
 2019/07/28 Update
  자바 창 하단부에 숫자를 입력받는 텍스트영역을 추가했습니다.
  원하는 반복횟수만큼 적용가능합니다. (1이하의 숫자는 전부 한번만 작동합니다.)
+ 현재 탭을 닫는 동작을 하기 때문에 여러 번호들을 한번에 갖고 오기위해서는 크롬이나 파이어폭스등 웹페이지에 탭으로 열어둬야합니다.
  테스트용으로 적어뒀던 코드를 일부 제외하고 삭제했습니다.
  현재 Save_Write_Number.java 파일은 작성되어있지만 사용하지 않습니다.
