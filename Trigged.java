@@ -13,6 +13,7 @@ public class Trigged extends Thread implements KeyListener {
     Thread wait = new Thread();
     int count = 0;
     int sleepTime = 150;
+    int copyTime = 50;
 
     public void trigger_Active() {
 //        flag = !flag;
@@ -41,7 +42,7 @@ public class Trigged extends Thread implements KeyListener {
             r.keyRelease(KeyEvent.VK_CONTROL);
             r.keyRelease(KeyEvent.VK_C);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(copyTime);
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             Transferable data = clipboard.getContents(this);

@@ -12,7 +12,7 @@ public class Main_Frame extends JFrame {
         JButton button = new JButton("trigger");
         JTextField jtf = new JTextField(getRepeat);
         JButton consoleLineEnterkey = new JButton("Console line enter key");
-
+        jtf.setText(String.valueOf(getRepeat));
         add(jtf,BorderLayout.SOUTH);
         add(button);
         add(consoleLineEnterkey,BorderLayout.EAST);
@@ -40,6 +40,7 @@ public class Main_Frame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("   ");
+                triger.count= 0;
             }
         };
         consoleLineEnterkey.addActionListener(consoleLineCarry);
