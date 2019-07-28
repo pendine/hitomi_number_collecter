@@ -9,6 +9,9 @@ this is use java robot.
 it is very simply working.
 Simply put, when you Alt + tap, make sure the Java window and web page appear in the first and second order.
 
+1.제작목적 = 히토미의 갤러리 '번호'를 만을 가져옵니다.
+2.사용목적 = 히토미의 갤러리 '번호'만을 수집합니다.
+
 
 멍청한놈이 만든 멍청한 프로그램입니다.
 복사 붙여넣기 하는게 손이 아파도 귀찮아서
