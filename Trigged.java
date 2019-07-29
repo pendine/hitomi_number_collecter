@@ -7,12 +7,12 @@ import java.awt.event.KeyListener;
 
 public class Trigged extends Thread implements KeyListener {
     boolean flag = false;
-    String tmp;
+    String tmp ="";
     Robot r;
     Thread wait = new Thread();
     int count = 0;
     private int phazeTime = 50;
-    private int copyTime = 50;
+    private int copyTime = 20;
     private int KeyReleasedTerm = 50;
 
     public void trigger_Active() {
@@ -50,13 +50,18 @@ public class Trigged extends Thread implements KeyListener {
 //            Thread.sleep(phazeTime);
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Thread.sleep(copyTime);
             Transferable data = clipboard.getContents(this);
-            tmp = (String) data.getTransferData(DataFlavor.stringFlavor);
-            String aaa = getString(tmp);
-            System.out.print(aaa+" ");
-//            new Save_Write_Number().saveNumber(aaa);
+            Thread.sleep(copyTime);
+//            tmp = (String) data.getTransferData(DataFlavor.stringFlavor);
+//            String aaa = getString(tmp);
+            String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
+            Thread.sleep(copyTime);
+            aaa = getString(aaa);
 
-//            Thread.sleep(copyTime);
+            numCompare(5, aaa, tmp);
+
+//            new Save_Write_Number().saveNumber(aaa);
 
             Thread.sleep(phazeTime);
 
@@ -116,5 +121,16 @@ public class Trigged extends Thread implements KeyListener {
             }
         }
         return storage;
+    }
+
+    public void numCompare(int checkTimes, String input, String Storage) throws Exception{
+        for(int i =0; i<checkTimes; i++) {
+            if(!input.equals(Storage)) {
+                Storage = input;
+                System.out.print(Storage + " ");
+                break;
+            }
+            Thread.sleep(copyTime);
+        }
     }
 }
