@@ -11,9 +11,9 @@ public class Trigged extends Thread implements KeyListener {
     Robot r;
     Thread wait = new Thread();
     int count = 0;
-    private int phazeTime = 40;
+    private int phazeTime = 50;
     private int copyTime = 50;
-    private int KeyReleasedTerm = 25;
+    private int KeyReleasedTerm = 50;
 
     public void trigger_Active() {
 //        flag = !flag;
@@ -47,7 +47,7 @@ public class Trigged extends Thread implements KeyListener {
             r.keyRelease(KeyEvent.VK_CONTROL);
             r.keyRelease(KeyEvent.VK_C);
 
-            Thread.sleep(phazeTime);
+//            Thread.sleep(phazeTime);
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             Transferable data = clipboard.getContents(this);
@@ -56,7 +56,7 @@ public class Trigged extends Thread implements KeyListener {
             System.out.print(aaa+" ");
 //            new Save_Write_Number().saveNumber(aaa);
 
-            Thread.sleep(copyTime);
+//            Thread.sleep(copyTime);
 
             Thread.sleep(phazeTime);
 
