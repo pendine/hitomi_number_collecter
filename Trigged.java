@@ -25,6 +25,8 @@ public class Trigged extends Thread implements KeyListener {
         }
 
         try {
+            Thread.sleep(sleepTime);
+
             r.keyPress(KeyEvent.VK_ALT);
             r.keyPress(KeyEvent.VK_TAB);
             r.keyRelease(KeyEvent.VK_TAB);

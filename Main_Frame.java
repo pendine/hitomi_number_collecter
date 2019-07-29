@@ -13,9 +13,10 @@ public class Main_Frame extends JFrame {
         JTextField jtf = new JTextField(getRepeat);
         JButton consoleLineEnterkey = new JButton("Console line enter key");
         jtf.setText(String.valueOf(getRepeat));
-        add(jtf,BorderLayout.SOUTH);
+        add(jtf);
+        setLayout(new GridLayout(3,2,10,10));
         add(button);
-        add(consoleLineEnterkey,BorderLayout.EAST);
+        add(consoleLineEnterkey);
         addKeyListener(triger);
         setFocusable(true);
 
@@ -24,13 +25,19 @@ public class Main_Frame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String tmp  = jtf.getText();
-                getRepeat = Integer.parseInt(tmp);
+                if(tmp != null) {
+                    getRepeat = Integer.parseInt(tmp);
+                }else{
+                    getRepeat = 1;
+                }
                 if(getRepeat >1){
                     for(int i=0; i<getRepeat; i++){
                         triger.trigger_Active();
                     }
+                    jtf.setText(String.valueOf(repeat));
                 }else {
                     triger.trigger_Active();
+                    jtf.setText(String.valueOf(repeat));
                 }
             }
         };
