@@ -76,6 +76,12 @@ Simply put, when you Alt + tap, make sure the Java window and web page appear in
  2. 트리거 시작전 대기시간 추가로 기능 안정화
  3. 시작시 자동적으로 1회로 설정 및 다회 반복후 1회로 초기화를 수행
  
- issue
+ issue - resolved
  매번 동작시마다 알트텝을 사용하기 때문에 불안정하며, thread sleep 후 제대로 된 기능을 하지 않는경우가 프로그램 시작후 바로 반복동작을 요청했을때 나타남
  알트텝 기능을 사용하지 않고 탭변경 또는 탭닫기 기능을 위해서는 다른 해결방안이 필요함
+           ========
+           해결방법 = 키를 누르고 떼는 과정에 대기시간을 삽입해줌.
+
+
+
+ 
