@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -12,8 +11,9 @@ public class Trigged extends Thread implements KeyListener {
     Robot r;
     Thread wait = new Thread();
     int count = 0;
-    int sleepTime = 150;
-    int copyTime = 50;
+    private int phazeTime = 40;
+    private int copyTime = 50;
+    private int KeyReleasedTerm = 25;
 
     public void trigger_Active() {
 //        flag = !flag;
@@ -25,26 +25,29 @@ public class Trigged extends Thread implements KeyListener {
         }
 
         try {
-            Thread.sleep(sleepTime);
+            Thread.sleep(phazeTime);
 
             r.keyPress(KeyEvent.VK_ALT);
             r.keyPress(KeyEvent.VK_TAB);
+            Thread.sleep(KeyReleasedTerm);
             r.keyRelease(KeyEvent.VK_TAB);
             r.keyRelease(KeyEvent.VK_ALT);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(phazeTime);
 
             r.keyPress(KeyEvent.VK_F6);
+            Thread.sleep(KeyReleasedTerm);
             r.keyRelease(KeyEvent.VK_F6);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(phazeTime);
 
             r.keyPress(KeyEvent.VK_CONTROL);
             r.keyPress(KeyEvent.VK_C);
+            Thread.sleep(KeyReleasedTerm);
             r.keyRelease(KeyEvent.VK_CONTROL);
             r.keyRelease(KeyEvent.VK_C);
 
-            Thread.sleep(copyTime);
+            Thread.sleep(phazeTime);
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             Transferable data = clipboard.getContents(this);
@@ -53,21 +56,25 @@ public class Trigged extends Thread implements KeyListener {
             System.out.print(aaa+" ");
 //            new Save_Write_Number().saveNumber(aaa);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(copyTime);
+
+            Thread.sleep(phazeTime);
 
             r.keyPress(KeyEvent.VK_CONTROL);
             r.keyPress(KeyEvent.VK_W);
+            Thread.sleep(KeyReleasedTerm);
             r.keyRelease(KeyEvent.VK_CONTROL);
             r.keyRelease(KeyEvent.VK_W);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(phazeTime);
 
             r.keyPress(KeyEvent.VK_ALT);
             r.keyPress(KeyEvent.VK_TAB);
+            Thread.sleep(KeyReleasedTerm);
             r.keyRelease(KeyEvent.VK_TAB);
             r.keyRelease(KeyEvent.VK_ALT);
 
-            Thread.sleep(sleepTime);
+            Thread.sleep(phazeTime);
 
 
         } catch (Exception e) {
