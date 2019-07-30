@@ -82,6 +82,8 @@ Simply put, when you Alt + tap, make sure the Java window and web page appear in
  알트텝 기능을 사용하지 않고 탭변경 또는 탭닫기 기능을 위해서는 다른 해결방안이 필요함
            ========
            해결방법 = 키를 누르고 떼는 과정에 대기시간을 삽입해줌.
+           
+           
 2019/07/30 Uptate
 단일메소드로 해결하려다 귀찮은짓 하는김데 좀 더 귀찮게 굴어봄
 1. 다회 반복시 사용하는 메소드와 단일 사용시 메소드 분리
