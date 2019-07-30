@@ -3,134 +3,222 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
-public class Trigged extends Thread implements KeyListener {
-    boolean flag = false;
-    String tmp ="";
+public class Trigged extends Thread {
     Robot r;
-    Thread wait = new Thread();
+    String[] stringArray;
     int count = 0;
-    private int phazeTime = 50;
-    private int copyTime = 20;
-    private int KeyReleasedTerm = 50;
-
-    public void trigger_Active() {
-//        flag = !flag;
-        count++;
-        try {
-            r = new Robot();
-        } catch (AWTException em) {
-            em.printStackTrace();
-        }
-
-        try {
-            Thread.sleep(phazeTime);
-
-            r.keyPress(KeyEvent.VK_ALT);
-            r.keyPress(KeyEvent.VK_TAB);
-            Thread.sleep(KeyReleasedTerm);
-            r.keyRelease(KeyEvent.VK_TAB);
-            r.keyRelease(KeyEvent.VK_ALT);
-
-            Thread.sleep(phazeTime);
-
-            r.keyPress(KeyEvent.VK_F6);
-            Thread.sleep(KeyReleasedTerm);
-            r.keyRelease(KeyEvent.VK_F6);
-
-            Thread.sleep(phazeTime);
-
-            r.keyPress(KeyEvent.VK_CONTROL);
-            r.keyPress(KeyEvent.VK_C);
-            Thread.sleep(KeyReleasedTerm);
-            r.keyRelease(KeyEvent.VK_CONTROL);
-            r.keyRelease(KeyEvent.VK_C);
-
-//            Thread.sleep(phazeTime);
-
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            Thread.sleep(copyTime);
-            Transferable data = clipboard.getContents(this);
-            Thread.sleep(copyTime);
-//            tmp = (String) data.getTransferData(DataFlavor.stringFlavor);
-//            String aaa = getString(tmp);
-            String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
-            Thread.sleep(copyTime);
-            aaa = getString(aaa);
-
-            numCompare(5, aaa, tmp);
-
-//            new Save_Write_Number().saveNumber(aaa);
-
-            Thread.sleep(phazeTime);
-
-            r.keyPress(KeyEvent.VK_CONTROL);
-            r.keyPress(KeyEvent.VK_W);
-            Thread.sleep(KeyReleasedTerm);
-            r.keyRelease(KeyEvent.VK_CONTROL);
-            r.keyRelease(KeyEvent.VK_W);
-
-            Thread.sleep(phazeTime);
-
-            r.keyPress(KeyEvent.VK_ALT);
-            r.keyPress(KeyEvent.VK_TAB);
-            Thread.sleep(KeyReleasedTerm);
-            r.keyRelease(KeyEvent.VK_TAB);
-            r.keyRelease(KeyEvent.VK_ALT);
-
-            Thread.sleep(phazeTime);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        if(count % 15 == 0){
-            System.out.println(" ");
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        char c = e.getKeyChar();
-       if (c == 'C' || c == 'c') {
-            System.out.println("  ");
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
+    private int beforeWork = 50;
+    private int copyTime = 30;
+    private int afterWork = 100;
+    private int keyReleasedTerm = 50;
 
     public String getString(String tmp) {
         String storage = "";
-        for(int i = tmp.length()/2; i<tmp.length(); i++){
-            if('0'<=tmp.charAt(i)&&tmp.charAt(i)<='9'){
-                storage = storage+tmp.charAt(i);
-            }else if(tmp.charAt(i)=='/'){
-                storage="";
-            }
-            else if(tmp.charAt(i)=='#'){
+        for (int i = tmp.length() / 2; i < tmp.length(); i++) {
+            if ('0' <= tmp.charAt(i) && tmp.charAt(i) <= '9') {
+                storage = storage + tmp.charAt(i);
+            } else if (tmp.charAt(i) == '/') {
+                storage = "";
+            } else if (tmp.charAt(i) == '#') {
                 break;
             }
         }
         return storage;
     }
 
-    public void numCompare(int checkTimes, String input, String Storage) throws Exception{
-        for(int i =0; i<checkTimes; i++) {
-            if(!input.equals(Storage)) {
+    private int numCompare(int checkTimes, int input, int Storage) throws Exception {
+        for (int i = 0; i < checkTimes; i++) {
+            Thread.sleep(copyTime);
+            if (input != Storage) {
                 Storage = input;
                 System.out.print(Storage + " ");
+                if(count%10==0){
+                    System.out.println(" ");
+                }
+                return input;
+            }
+        }
+        return input;
+    }
+
+    public String numCompare(int checkTimes, String input, String Storage, Transferable getText, Clipboard clipboard) throws Exception {
+        for (int i = 0; i < checkTimes; i++) {
+            if (!input.equals(Storage)) {
+                Storage = input;
+                System.out.print(Storage + " ");
+                return input;
+            } else {
+                Thread.sleep(copyTime);
+                getText = clipboard.getContents(this);
+                input = (String) getText.getTransferData(DataFlavor.stringFlavor);
+                input = getString(input);
+            }
+        }
+        return input;
+    }
+
+    private void insert_to_NumberArray(String[] stringsArray, String newNumber) {
+        for (int i = 0; i < stringsArray.length; i++) {
+            if (stringArray[i].length() < 5 || stringArray[i].length() > 13) {
+                stringsArray[i] = newNumber;
                 break;
             }
-            Thread.sleep(copyTime);
+            if (stringsArray[i].equals(newNumber)) {
+                break;
+            }
         }
     }
+
+    public void printNumbers() {
+        for (int i = 0; i < stringArray.length; i++) {
+            System.out.print(stringArray[i] + " ");
+            if (i % 15 == 0) {
+                System.out.println(" ");
+            }
+        }
+    }
+
+    private void altTab(Robot r, int beforeWaitingTime, int keyWaitingTime, int afterWaitingTime) throws Exception {
+        Thread.sleep(beforeWaitingTime);
+
+        r.keyPress(KeyEvent.VK_ALT);
+        r.keyPress(KeyEvent.VK_TAB);
+
+        Thread.sleep(keyWaitingTime);
+
+        r.keyRelease(KeyEvent.VK_TAB);
+        r.keyRelease(KeyEvent.VK_ALT);
+
+        Thread.sleep(afterWaitingTime);
+    }
+
+    private void funtion6(Robot r, int beforeWaitingTime, int keyWaitingTime, int afterWaitingTime) throws Exception {
+        Thread.sleep(beforeWaitingTime);
+
+        r.keyPress(KeyEvent.VK_F6);
+
+        Thread.sleep(keyWaitingTime);
+
+        r.keyRelease(KeyEvent.VK_F6);
+
+        Thread.sleep(afterWaitingTime);
+    }
+
+    private void copy(Robot r, int beforeWaitingTime, int keyWaitingTime, int afterWaitingTime) throws Exception {
+        Thread.sleep(beforeWaitingTime);
+
+        r.keyPress(KeyEvent.VK_CONTROL);
+        r.keyPress(KeyEvent.VK_C);
+
+        Thread.sleep(keyWaitingTime);
+
+        r.keyRelease(KeyEvent.VK_CONTROL);
+        r.keyRelease(KeyEvent.VK_C);
+
+        Thread.sleep(afterWaitingTime);
+    }
+
+    private void closeTab(Robot r, int beforeWaitingTime, int keyWaitingTime, int afterWaitingTime) throws Exception {
+        Thread.sleep(beforeWaitingTime);
+
+        r.keyPress(KeyEvent.VK_CONTROL);
+        r.keyPress(KeyEvent.VK_W);
+
+        Thread.sleep(keyWaitingTime);
+
+        r.keyRelease(KeyEvent.VK_CONTROL);
+        r.keyRelease(KeyEvent.VK_W);
+
+        Thread.sleep(afterWaitingTime);
+    }
+
+    public void multi_Active(int times){
+        int tmp = 0;
+
+
+        try {
+            r = new Robot();
+        } catch (AWTException em) {
+            em.printStackTrace();
+        }
+        try {
+            altTab(r, beforeWork, keyReleasedTerm, afterWork);
+
+            for(int i=0; i<times; i++) {
+                count++;
+                funtion6(r, beforeWork, keyReleasedTerm, afterWork);
+                copy(r, beforeWork, keyReleasedTerm, afterWork);
+
+                Thread.sleep(copyTime);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Thread.sleep(copyTime);
+                Transferable data = clipboard.getContents(this);
+                Thread.sleep(copyTime);
+                String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
+                Integer check = Integer.parseInt(getString(aaa));
+                if (check == null) {
+                    Thread.interrupted();
+                }
+                Thread.sleep(copyTime);
+                int intTemp = Integer.parseInt(getString(aaa));
+
+                Thread.sleep(afterWork);
+
+                tmp = numCompare(copyTime, intTemp, tmp);
+
+                closeTab(r,beforeWork,keyReleasedTerm,afterWork);
+            }
+
+
+        } catch (NumberFormatException e){
+            System.out.println("잘못된 주소 : 중지됨");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void trigger_Active() {
+        int tmp = 0;
+
+        count++;
+        try {
+            r = new Robot();
+        } catch (AWTException em) {
+            em.printStackTrace();
+        }
+        try {
+            altTab(r, beforeWork, keyReleasedTerm, afterWork);
+            funtion6(r, beforeWork, keyReleasedTerm, afterWork);
+            copy(r, beforeWork, keyReleasedTerm, afterWork);
+
+            Thread.sleep(copyTime);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            Thread.sleep(copyTime);
+            Transferable data = clipboard.getContents(this);
+            Thread.sleep(copyTime);
+            String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
+            Integer check = Integer.parseInt(getString(aaa)) ;
+            if(check == null){
+                Thread.interrupted();
+            }
+            Thread.sleep(copyTime);
+            int i = Integer.parseInt(getString(aaa));
+
+            Thread.sleep(copyTime);
+            Thread.sleep(afterWork);
+
+            tmp = numCompare(copyTime, i, tmp);
+
+            closeTab(r, beforeWork, keyReleasedTerm, afterWork);
+            altTab(r, beforeWork, keyReleasedTerm, afterWork);
+
+        } catch (NumberFormatException e){
+            System.out.println("잘못된 주소 : 중지됨");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
