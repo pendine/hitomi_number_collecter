@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -8,10 +9,10 @@ public class Trigged extends Thread {
     Robot r;
     String[] stringArray;
     int count = 0;
-    private int beforeWork = 50;
+    private int beforeWork = 20;
     private int copyTime = 30;
-    private int afterWork = 100;
-    private int keyReleasedTerm = 50;
+    private int afterWork = 50;
+    private int keyReleasedTerm = 20;
 
     public String getString(String tmp) {
         String storage = "";
@@ -35,6 +36,23 @@ public class Trigged extends Thread {
                 System.out.print(Storage + " ");
                 if(count%10==0){
                     System.out.println(" ");
+                }
+                return input;
+            }
+        }
+        return input;
+    }
+    private int numCompare(int checkTimes, int input, int Storage, JTextArea jta) throws Exception {
+        for (int i = 0; i < checkTimes; i++) {
+            Thread.sleep(copyTime);
+            if (input != Storage) {
+
+                Storage = input;
+                jta.append(String.valueOf(Storage)+" ");
+                System.out.print(Storage + " ");
+                if(count%10==0){
+                    System.out.println(" ");
+                    jta.append(" \n");
                 }
                 return input;
             }
@@ -136,7 +154,6 @@ public class Trigged extends Thread {
     public void multi_Active(int times){
         int tmp = 0;
 
-
         try {
             r = new Robot();
         } catch (AWTException em) {
@@ -170,18 +187,17 @@ public class Trigged extends Thread {
                 closeTab(r,beforeWork,keyReleasedTerm,afterWork);
             }
 
+            altTab(r, beforeWork, keyReleasedTerm, afterWork);
 
         } catch (NumberFormatException e){
-            System.out.println("잘못된 주소 : 중지됨");
+            System.out.println("\n잘못된 주소 : 중지됨\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    public void trigger_Active() {
+    public void multi_Active(int times, JTextArea jta){
         int tmp = 0;
 
-        count++;
         try {
             r = new Robot();
         } catch (AWTException em) {
@@ -189,36 +205,39 @@ public class Trigged extends Thread {
         }
         try {
             altTab(r, beforeWork, keyReleasedTerm, afterWork);
-            funtion6(r, beforeWork, keyReleasedTerm, afterWork);
-            copy(r, beforeWork, keyReleasedTerm, afterWork);
 
-            Thread.sleep(copyTime);
-            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            Thread.sleep(copyTime);
-            Transferable data = clipboard.getContents(this);
-            Thread.sleep(copyTime);
-            String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
-            Integer check = Integer.parseInt(getString(aaa)) ;
-            if(check == null){
-                Thread.interrupted();
+            for(int i=0; i<times; i++) {
+                count++;
+                funtion6(r, beforeWork, keyReleasedTerm, afterWork);
+                copy(r, beforeWork, keyReleasedTerm, afterWork);
+
+                Thread.sleep(copyTime);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Thread.sleep(copyTime);
+                Transferable data = clipboard.getContents(this);
+                Thread.sleep(copyTime);
+                String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
+                Integer check = Integer.parseInt(getString(aaa));
+                if (check == null) {
+                    Thread.interrupted();
+                }
+                Thread.sleep(copyTime);
+                int intTemp = Integer.parseInt(getString(aaa));
+
+                Thread.sleep(afterWork);
+
+                tmp = numCompare(copyTime, intTemp, tmp, jta);
+
+                closeTab(r,beforeWork,keyReleasedTerm,afterWork);
             }
-            Thread.sleep(copyTime);
-            int i = Integer.parseInt(getString(aaa));
 
-            Thread.sleep(copyTime);
-            Thread.sleep(afterWork);
-
-            tmp = numCompare(copyTime, i, tmp);
-
-            closeTab(r, beforeWork, keyReleasedTerm, afterWork);
             altTab(r, beforeWork, keyReleasedTerm, afterWork);
 
         } catch (NumberFormatException e){
-            System.out.println("잘못된 주소 : 중지됨");
+            System.out.println("\n잘못된 주소 : 중지됨\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
+    //class end
 }
