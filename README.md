@@ -92,3 +92,8 @@ Simply put, when you Alt + tap, make sure the Java window and web page appear in
 2. 다회작동시마다 작동중 중복번호 확인, 중복방지 동작 예정
 3. 내일 텍스트 파일 생성 동작 확인 예정
  
+ 
+2019/08/02 Uptate
+c드라이브에 파일 생성이 불가능한 관계로 Text파일 생성을 포기하고 gui창에서 수집한 번호를 표기하는 방식으로 변경
+1. 이제 수집한 번호들을 버튼 옆에서 보여줍니다.
+2. exe파일로 만들 예정
