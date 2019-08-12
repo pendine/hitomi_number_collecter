@@ -14,9 +14,9 @@ public class Trigged extends Thread {
     private int afterWork = 50;
     private int keyReleasedTerm = 20;
 
-    public String getString(String tmp) {
+    public String getString(String tmp) {  //주소창의 숫자 판단부분 마지막 슬래쉬 뒤의 숫자부분들만 가져오기
         String storage = "";
-        for (int i = tmp.length() / 2; i < tmp.length(); i++) {
+        for (int i = 0; i < tmp.length(); i++) {
             if ('0' <= tmp.charAt(i) && tmp.charAt(i) <= '9') {
                 storage = storage + tmp.charAt(i);
             } else if (tmp.charAt(i) == '/') {
@@ -42,11 +42,11 @@ public class Trigged extends Thread {
         }
         return input;
     }
-    private int numCompare(int checkTimes, int input, int Storage, JTextArea jta) throws Exception {
+    private int numCompare(int checkTimes, int input, int Storage, JTextArea jta) throws Exception { //jTextArea에 출력할때 10개단위로 출력함
+        //
         for (int i = 0; i < checkTimes; i++) {
             Thread.sleep(copyTime);
-            if (input != Storage) {
-
+            if (input != Storage) {  //기존에 복사한 숫자와 다를때
                 Storage = input;
                 jta.append(String.valueOf(Storage)+" ");
                 System.out.print(Storage + " ");
@@ -55,6 +55,12 @@ public class Trigged extends Thread {
                     jta.append(" \n");
                 }
                 return input;
+            } else{  //기존에 복사한 숫자와 같을때 (f6키가 제대로 기능했지만 제대로 복사가 안됬다고 판단했다는 가정하에 다시 복사)
+                copy(this.r,  beforeWork, keyReleasedTerm, afterWork);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                Transferable data = clipboard.getContents(this);
+                String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
+                Storage = Integer.parseInt(aaa);
             }
         }
         return input;
@@ -68,6 +74,7 @@ public class Trigged extends Thread {
                 return input;
             } else {
                 Thread.sleep(copyTime);
+
                 getText = clipboard.getContents(this);
                 input = (String) getText.getTransferData(DataFlavor.stringFlavor);
                 input = getString(input);
@@ -151,7 +158,7 @@ public class Trigged extends Thread {
         Thread.sleep(afterWaitingTime);
     }
 
-    public void multi_Active(int times){
+    public void multi_Active(int times){  // JDK에디터에서만 사용할때 테스팅용
         int tmp = 0;
 
         try {
@@ -211,22 +218,21 @@ public class Trigged extends Thread {
                 funtion6(r, beforeWork, keyReleasedTerm, afterWork);
                 copy(r, beforeWork, keyReleasedTerm, afterWork);
 
-                Thread.sleep(copyTime);
+//                Thread.sleep(copyTime);
                 Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-                Thread.sleep(copyTime);
+//                Thread.sleep(copyTime);
                 Transferable data = clipboard.getContents(this);
-                Thread.sleep(copyTime);
+//                Thread.sleep(copyTime);
                 String aaa = (String) data.getTransferData(DataFlavor.stringFlavor);
                 Integer check = Integer.parseInt(getString(aaa));
                 if (check == null) {
                     Thread.interrupted();
                 }
-                Thread.sleep(copyTime);
-                int intTemp = Integer.parseInt(getString(aaa));
+//                Thread.sleep(copyTime);
+//                int intTemp = Integer.parseInt(getString(aaa));
+//                Thread.sleep(afterWork);
 
-                Thread.sleep(afterWork);
-
-                tmp = numCompare(copyTime, intTemp, tmp, jta);
+                tmp = numCompare(copyTime, check, tmp, jta);
 
                 closeTab(r,beforeWork,keyReleasedTerm,afterWork);
             }
